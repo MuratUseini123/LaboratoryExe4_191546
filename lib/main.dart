@@ -8,10 +8,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,7 +22,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  int auto_increment_value = 2;
+  int auto_increment_value = 2; //this is for keeping id counter so it can be used for deleting given entry
   MyHomePage({super.key, required this.title});
   String title;
   @override
