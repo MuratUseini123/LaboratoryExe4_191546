@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import './course.dart';
 import './add_new_elem.dart';
+import './calendar.dart';
+import './Termins.dart';
+import './myEvent.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -22,7 +25,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  int auto_increment_value = 2; //this is for keeping id counter so it can be used for deleting given entry
+  int auto_increment_value =
+      2; //this is for keeping id counter so it can be used for deleting given entry
   MyHomePage({super.key, required this.title});
   String title;
   @override
@@ -30,57 +34,69 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-   void _addItemFunction(BuildContext ct) {
+  void _addItemFunction(BuildContext ct) {
     showModalBottomSheet(
         context: ct,
         builder: (_) {
-          return GestureDetector(onTap: () {}, child: NewCourseTermin(_addNewTerminToList,widget.auto_increment_value), behavior: HitTestBehavior.opaque);
+          return GestureDetector(
+            onTap: () {},
+            behavior: HitTestBehavior.opaque,
+            child: NewCourseTermin(
+                _addNewTerminToList, widget.auto_increment_value),
+          );
         });
-      widget.auto_increment_value +=1;
+    widget.auto_increment_value += 1;
   }
+
+  void _showCalendar(BuildContext ctx, List<MyEvent> evs) {
+    showModalBottomSheet(
+        context: ctx,
+        builder: (_) {
+          return GestureDetector(
+              onTap: () {},
+              behavior: HitTestBehavior.opaque,
+              child: MyCalendar(events: evs));
+        });
+  }
+
   void _addNewTerminToList(Course new_course_termin) {
     setState(() {
-      this.courses.add(new_course_termin);
+      courses.add(new_course_termin);
     });
   }
+
   List<Course> courses = [
     Course(1, "Computer Networks", DateTime.parse("2023-03-26 12:30:00")),
     Course(2, "Structured Programming", DateTime.parse("2023-03-27 14:45:00"))
   ];
+
+  List<MyEvent> initEvents() {
+    final List<MyEvent> evs = <MyEvent>[];
+    for (var course in courses) {
+      evs.add(MyEvent(course: course, c: Theme.of(context).primaryColor));
+    }
+    return evs;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),onPressed: () =>print(this.courses.toString()),),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showCalendar(context, initEvents()),
+        tooltip: "Calendar",
+        child: const Icon(Icons.calendar_month),
+      ),
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-          IconButton(onPressed: () => _addItemFunction(context), icon: Icon(Icons.add),tooltip: "Create new termin",),
+          IconButton(
+            onPressed: () => _addItemFunction(context),
+            icon: const Icon(Icons.add),
+            tooltip: "Create new termin",
+          ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: this.courses.length,
-        itemBuilder: (ctx,index){
-          return Card(
-            margin: EdgeInsets.all(10),
-            elevation: 5,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  margin: EdgeInsets.all(15),
-                  child: Text(
-                    courses.elementAt(index).course_name,
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,color: Theme.of(ctx).primaryColorLight),
-                  ),
-                ),
-                Container(
-                  child: Text("Date: ${DateFormat.yMMMMEEEEd().format(courses.elementAt(index).termin_date)} Time: ${DateFormat.jm().format(courses.elementAt(index).termin_date)}")
-                )
-              ],
-            ),
-          );
-        },
-      ),
+      body: Termin(courses: courses),
     );
   }
 }
