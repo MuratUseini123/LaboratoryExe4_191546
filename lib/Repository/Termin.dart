@@ -5,13 +5,19 @@ import 'package:path_provider/path_provider.dart';
 
 class Termin {
   final int? id;
+  // ignore: non_constant_identifier_names
   final String course_name;
+  // ignore: non_constant_identifier_names
   final String termin_date;
+  // ignore: non_constant_identifier_names
   final int created_by;
   Termin(
       {this.id,
+      // ignore: non_constant_identifier_names
       required this.course_name,
+      // ignore: non_constant_identifier_names
       required this.termin_date,
+      // ignore: non_constant_identifier_names
       required this.created_by});
   factory Termin.fromMap(Map<String, dynamic> json) => new Termin(
       id: json['id'],
@@ -29,7 +35,7 @@ class Termin {
 
   @override
   String toString() {
-    return 'Termin id:${id} Course Name: ${course_name} Date: ${termin_date}';
+    return 'Termin id:$id Course Name: $course_name Date: $termin_date';
   }
 }
 

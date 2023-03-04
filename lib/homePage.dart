@@ -5,9 +5,9 @@ import 'Termins.dart';
 import 'add_new_elem.dart';
 import 'auth.dart';
 import 'calendar.dart';
-import 'course.dart';
 import 'myEvent.dart';
 
+// ignore: must_be_immutable
 class MyHomePage extends StatefulWidget {
   MyHomePage({super.key, required this.title});
   String title;
@@ -65,17 +65,17 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: const Icon(Icons.add),
             tooltip: "Create new termin",
           ),
-          SizedBox(
+          const SizedBox(
             width: 15,
           ),
           IconButton(
-              icon: Icon(Icons.logout),
+              icon: const Icon(Icons.logout),
               tooltip: "Log out",
               onPressed: () {
                 print(LoginAuth.isLoggedin);
                 LoginAuth.isLoggedin = false;
                 Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (_) => LoginAuth()));
+                    context, MaterialPageRoute(builder: (_) => const LoginAuth()));
               }),
         ],
       ),

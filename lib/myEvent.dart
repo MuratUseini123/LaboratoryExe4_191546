@@ -1,8 +1,8 @@
+// ignore: file_names
 import 'dart:ui';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'Repository/Termin.dart';
-import 'course.dart';
 
 class MyEvent{
   final Termin termin;

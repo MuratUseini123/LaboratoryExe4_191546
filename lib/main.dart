@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 import './Repository/User.dart';
 import 'auth.dart';
 import 'homePage.dart';
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: LoginAuth(),
+      home: const LoginAuth(),
     );
   }
 }
@@ -50,11 +49,11 @@ class _testdbState extends State<testdb> {
           future: DatabaseHelper.instance.getUsers(),
           builder: (BuildContext context, AsyncSnapshot<List<User>> snapshot) {
             if (!snapshot.hasData) {
-              return Center(child: Text('Loading...'));
+              return const Center(child: Text('Loading...'));
             }
             return snapshot.data!.isEmpty
-                ? Center(
-                    child: const Text('No Users in List.'),
+                ? const Center(
+                    child: Text('No Users in List.'),
                   )
                 : Column(
                     children: [
@@ -81,7 +80,7 @@ class _testdbState extends State<testdb> {
                             textController.clear();
                           });
                         },
-                        child: Text("ADD"),
+                        child: const Text("ADD"),
                       ),
                     ],
                   );

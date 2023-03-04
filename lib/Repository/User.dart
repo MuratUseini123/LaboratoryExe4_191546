@@ -5,10 +5,14 @@ import 'package:path_provider/path_provider.dart';
 
 class User{
   final int? id;
+  // ignore: non_constant_identifier_names
   final String user_name;
+  // ignore: non_constant_identifier_names
   final String user_email;
+  // ignore: non_constant_identifier_names
   final String user_pass;
 
+  // ignore: non_constant_identifier_names
   User({this.id,required  this.user_name,required  this.user_email,required this.user_pass});
 
 

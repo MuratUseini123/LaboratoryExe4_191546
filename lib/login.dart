@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:src/auth.dart';
 
-import 'homePage.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -15,7 +14,7 @@ class _LoginState extends State<Login> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text("Login Page"),
+        title: const Text("Login Page"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -32,7 +31,7 @@ class _LoginState extends State<Login> {
                     )),
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                 decoration: InputDecoration(
@@ -41,8 +40,8 @@ class _LoginState extends State<Login> {
                     hintText: 'username@mail.com'),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
+            const Padding(
+              padding: EdgeInsets.only(
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               
               child: TextField(
@@ -53,7 +52,7 @@ class _LoginState extends State<Login> {
                     hintText: 'Enter secure password'),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Container(

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import './course.dart';
 import 'Repository/Termin.dart';
 
 class NewCourseTermin extends StatefulWidget {
+  const NewCourseTermin({super.key});
+
   @override
   State<StatefulWidget> createState() => _NewCourseTerminState();
 }
 
 class _NewCourseTerminState extends State<NewCourseTermin> {
+  // ignore: non_constant_identifier_names
   final _CourseNameController = TextEditingController();
+  // ignore: non_constant_identifier_names
   final _TerminDateController = TextEditingController();
+  // ignore: non_constant_identifier_names
   final _TerminTimeController = TextEditingController();
   void _submitTermin() async {
     await TerminDatabaseHelper.instance.addTermin(Termin(
@@ -29,7 +33,7 @@ class _NewCourseTerminState extends State<NewCourseTermin> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Column(
         children: [
           TextField(

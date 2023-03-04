@@ -1,10 +1,12 @@
+
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import './course.dart';
 import 'Repository/Termin.dart';
 
 class TerminWidget extends StatefulWidget {
-  TerminWidget({super.key});
+  const TerminWidget({super.key});
 
   @override
   State<TerminWidget> createState() => _TerminWidgetState();
@@ -19,11 +21,11 @@ class _TerminWidgetState extends State<TerminWidget> {
           builder:
               (BuildContext context, AsyncSnapshot<List<Termin>> snapshot) {
             if (!snapshot.hasData) {
-              return Center(child: Text('Loading...'));
+              return const Center(child: Text('Loading...'));
             }
             return snapshot.data!.isEmpty
-                ? Center(
-                    child: const Text('No Termins in List.'),
+                ? const Center(
+                    child: Text('No Termins in List.'),
                   )
                 : Column(
                     children: [
