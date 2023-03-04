@@ -16,18 +16,25 @@ class MyCalendar extends StatelessWidget {
         children: [
           Row(
             children: [
-              Padding(padding: EdgeInsets.fromLTRB(10, 2, 0, 10),child: ElevatedButton(onPressed: () => {Navigator.of(context).pop()}, child: Text("Go Back"),)),
+              Padding(
+                  padding: EdgeInsets.fromLTRB(10, 2, 0, 10),
+                  child: ElevatedButton(
+                    onPressed: () => {Navigator.of(context).pop()},
+                    child: Text("Go Back"),
+                  )),
             ],
           ),
           Expanded(
             child: SfCalendar(
               view: CalendarView.month,
               dataSource: MyEventDataSource(events),
-              monthViewSettings: MonthViewSettings(appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
+              monthViewSettings: MonthViewSettings(
+                  appointmentDisplayMode:
+                      MonthAppointmentDisplayMode.appointment),
             ),
           ),
         ],
       ),
-    ); 
+    );
   }
 }

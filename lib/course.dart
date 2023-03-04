@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 
 class Course {
-  int course_id  = -1;
+  int course_id = -1;
   String course_name = '';
   DateTime termin_date = DateTime.now();
 
-  Course(int id, this.course_name, this.termin_date){
+  Course(int id, this.course_name, this.termin_date) {
     course_id = id;
   }
 

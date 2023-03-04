@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import './course.dart';
-import './add_new_elem.dart';
-import './calendar.dart';
-import './Termins.dart';
-import './myEvent.dart';
+import 'package:sqflite/sqflite.dart';
+import './Repository/User.dart';
+import 'auth.dart';
+import 'homePage.dart';
+import 'login.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -16,87 +17,76 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Termins',
+      routes: {
+        '/homePage': (_) => MyHomePage(title: "Termins"),
+        '/loginPage': (_) => Login(),
+        '/LoginAuth': (_) => LoginAuth()
+      },
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: MyHomePage(title: 'Termins'),
+      home: LoginAuth(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  int auto_increment_value =
-      2; //this is for keeping id counter so it can be used for deleting given entry
-  MyHomePage({super.key, required this.title});
-  String title;
+
+
+//TODO w 
+class testdb extends StatefulWidget {
+  const testdb({super.key});
+
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<testdb> createState() => _testdbState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  void _addItemFunction(BuildContext ct) {
-    showModalBottomSheet(
-        context: ct,
-        builder: (_) {
-          return GestureDetector(
-            onTap: () {},
-            behavior: HitTestBehavior.opaque,
-            child: NewCourseTermin(
-                _addNewTerminToList, widget.auto_increment_value),
-          );
-        });
-    widget.auto_increment_value += 1;
-  }
-
-  void _showCalendar(BuildContext ctx, List<MyEvent> evs) {
-    showModalBottomSheet(
-        context: ctx,
-        builder: (_) {
-          return GestureDetector(
-              onTap: () {},
-              behavior: HitTestBehavior.opaque,
-              child: MyCalendar(events: evs));
-        });
-  }
-
-  void _addNewTerminToList(Course new_course_termin) {
-    setState(() {
-      courses.add(new_course_termin);
-    });
-  }
-
-  List<Course> courses = [
-    Course(1, "Computer Networks", DateTime.parse("2023-03-26 12:30:00")),
-    Course(2, "Structured Programming", DateTime.parse("2023-03-27 14:45:00"))
-  ];
-
-  List<MyEvent> initEvents() {
-    final List<MyEvent> evs = <MyEvent>[];
-    for (var course in courses) {
-      evs.add(MyEvent(course: course, c: Theme.of(context).primaryColor));
-    }
-    return evs;
-  }
+class _testdbState extends State<testdb> {
+  TextEditingController textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _showCalendar(context, initEvents()),
-        tooltip: "Calendar",
-        child: const Icon(Icons.calendar_month),
-      ),
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-            onPressed: () => _addItemFunction(context),
-            icon: const Icon(Icons.add),
-            tooltip: "Create new termin",
-          ),
-        ],
-      ),
-      body: Termin(courses: courses),
+    return Center(
+      child: FutureBuilder<List<User>>(
+          future: DatabaseHelper.instance.getUsers(),
+          builder: (BuildContext context, AsyncSnapshot<List<User>> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: Text('Loading...'));
+            }
+            return snapshot.data!.isEmpty
+                ? Center(
+                    child: const Text('No Users in List.'),
+                  )
+                : Column(
+                    children: [
+                      Expanded(
+                        child: ListView(
+                          children: snapshot.data!.map((user) {
+                            return Center(
+                              child: Text(user.user_name),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      TextField(
+                        controller: textController,
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await DatabaseHelper.instance.add(User(
+                              user_name: "muawdawwrataaawdaa",
+                              user_email: "murat@gmail.com",
+                              user_pass: "murat12345",
+                              id: 4));
+                          setState(() {
+                            textController.clear();
+                          });
+                        },
+                        child: Text("ADD"),
+                      ),
+                    ],
+                  );
+          }),
     );
   }
 }
+

@@ -1,12 +1,13 @@
 import 'dart:ui';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'Repository/Termin.dart';
 import 'course.dart';
 
 class MyEvent{
-  final Course course;
+  final Termin termin;
   final Color c;
-  MyEvent({required this.course, required this.c});
+  MyEvent({required this.termin, required this.c});
 }
 
 
@@ -17,17 +18,17 @@ class MyEventDataSource extends CalendarDataSource{
 
   @override
   DateTime getStartTime(int index) {
-    return _getEventData(index).course.termin_date;
+    return DateTime.parse(_getEventData(index).termin.termin_date);
   }
 
   @override
   DateTime getEndTime(int index) {
-    return _getEventData(index).course.termin_date;
+    return DateTime.parse(_getEventData(index).termin.termin_date);
   }
 
   @override
   String getSubject(int index) {
-    return '${_getEventData(index).course.course_name} - ${DateFormat.Hm().format(_getEventData(index).course.termin_date)}';
+    return '${_getEventData(index).termin.course_name} - ${DateFormat.Hm().format(DateTime.parse(_getEventData(index).termin.termin_date))}';
   }
 
   @override
